@@ -6,16 +6,17 @@
   <title>Umbanda en Argentina | Casa AZHAS - Villa Ballester</title>
   <style>
     :root {
-      --bg: #08090b;
-      --surface: #111419;
-      --surface-hover: #171b22;
-      --primary: #10b981;
-      --primary-glow: rgba(16, 185, 129, 0.25);
-      --accent: #f59e0b;
-      --accent-glow: rgba(245, 158, 11, 0.28);
-      --text: #f8fafc;
-      --muted: #94a3b8;
-      --border: rgba(255, 255, 255, 0.09);
+      --bg: #070607;
+      --surface: #120e10;
+      --surface-hover: #1b1316;
+      --primary: #dc2626;
+      --primary-bright: #ef4444;
+      --primary-glow: rgba(220, 38, 38, 0.32);
+      --accent: #eab308;
+      --accent-glow: rgba(234, 179, 8, 0.28);
+      --text: #ffffff;
+      --muted: #cbd5e1;
+      --border: rgba(255, 255, 255, 0.1);
       --radius: 18px;
     }
 
@@ -48,9 +49,139 @@
       padding: 0 22px;
     }
 
-    /* Barra superior estilo glassmorphism */
+    /* Barra de Admin (oculta por defecto) */
+    #admin-bar {
+      display: none;
+      background: #1e1b18;
+      border-bottom: 2px solid var(--accent);
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    #admin-bar.active {
+      display: flex;
+    }
+
+    .admin-status {
+      font-size: 0.9rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .admin-btn {
+      background: #292524;
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .admin-btn:hover {
+      background: #3f3a38;
+    }
+
+    .admin-btn-save {
+      background: var(--accent);
+      color: #090703;
+      border: none;
+    }
+
+    .admin-btn-save:hover {
+      filter: brightness(1.1);
+    }
+
+    body.editing-mode [data-editable] {
+      outline: 1px dashed rgba(234, 179, 8, 0.6);
+      outline-offset: 4px;
+      border-radius: 6px;
+      cursor: text;
+    }
+
+    body.editing-mode [data-editable]:focus {
+      outline: 2px solid var(--accent);
+      background: rgba(234, 179, 8, 0.06);
+    }
+
+    /* Modal de Login */
+    #login-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.82);
+      backdrop-filter: blur(8px);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    #login-modal.open {
+      display: flex;
+    }
+
+    .login-card {
+      background: #140f11;
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      border-radius: 18px;
+      padding: 28px;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+
+    .login-card h3 {
+      font-weight: 900;
+      margin-bottom: 8px;
+      font-size: 1.3rem;
+    }
+
+    .login-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+    }
+
+    .login-input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: #070607;
+      color: #ffffff;
+      font-size: 1rem;
+      margin-bottom: 14px;
+      outline: none;
+    }
+
+    .login-input:focus {
+      border-color: var(--accent);
+    }
+
+    .login-error {
+      color: #f87171;
+      font-size: 0.85rem;
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    /* Barra superior translúcida */
     header {
-      background: rgba(8, 9, 11, 0.78);
+      background: rgba(7, 6, 7, 0.82);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
@@ -73,9 +204,11 @@
       font-size: 1.15rem;
       letter-spacing: 0.8px;
       text-transform: uppercase;
-      background: linear-gradient(90deg, #ffffff, #cbd5e1);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: #ffffff;
+    }
+
+    .brand span {
+      color: var(--primary-bright);
     }
 
     .nav-links {
@@ -83,11 +216,11 @@
       gap: 24px;
       font-size: 0.95rem;
       color: var(--muted);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .nav-links a:hover {
-      color: var(--text);
+      color: var(--accent);
     }
 
     /* Botones modernos */
@@ -95,67 +228,70 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: var(--primary);
-      color: #04130d;
+      background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+      color: #ffffff;
       font-weight: 800;
       font-size: 0.95rem;
       padding: 13px 24px;
       border-radius: 999px;
-      transition: transform 0.18s ease, box-shadow 0.2s ease, background 0.2s ease;
-      box-shadow: 0 0 24px var(--primary-glow);
+      transition: transform 0.18s ease, box-shadow 0.2s ease, filter 0.2s ease;
+      box-shadow: 0 0 26px var(--primary-glow);
+      border: none;
+      cursor: pointer;
     }
 
     .btn:hover {
       transform: translateY(-2px);
-      background: #34d399;
-      box-shadow: 0 0 32px rgba(16, 185, 129, 0.45);
+      filter: brightness(1.1);
+      box-shadow: 0 0 36px rgba(239, 68, 68, 0.5);
     }
 
     .btn-accent {
-      background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
-      color: #0b0904;
+      background: linear-gradient(135deg, #facc15 0%, #ca8a04 100%);
+      color: #090703;
       box-shadow: 0 0 26px var(--accent-glow);
     }
 
     .btn-accent:hover {
-      background: linear-gradient(135deg, #fcd34d 0%, #f59e0b 100%);
-      box-shadow: 0 0 34px rgba(245, 158, 11, 0.45);
+      filter: brightness(1.08);
+      box-shadow: 0 0 36px rgba(234, 179, 8, 0.45);
     }
 
     .btn-outline {
-      border: 1px solid rgba(255, 255, 255, 0.22);
-      background: rgba(255, 255, 255, 0.03);
-      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.04);
+      color: #ffffff;
       padding: 13px 24px;
       border-radius: 999px;
       font-weight: 700;
       transition: background 0.2s ease, border-color 0.2s ease;
+      cursor: pointer;
     }
 
     .btn-outline:hover {
-      background: rgba(255, 255, 255, 0.09);
-      border-color: rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--accent);
     }
 
-    /* Hero oscuro con luz ambiental */
+    /* Hero oscuro */
     .hero {
       position: relative;
       padding: 84px 0 76px;
       background:
-        radial-gradient(circle at 18% 20%, rgba(16, 185, 129, 0.14), transparent 45%),
-        radial-gradient(circle at 85% 30%, rgba(245, 158, 11, 0.12), transparent 45%),
+        radial-gradient(circle at 18% 22%, rgba(220, 38, 38, 0.22), transparent 46%),
+        radial-gradient(circle at 85% 30%, rgba(234, 179, 8, 0.14), transparent 45%),
         var(--bg);
       border-bottom: 1px solid var(--border);
     }
 
     .badge {
       display: inline-block;
-      background: rgba(16, 185, 129, 0.12);
-      border: 1px solid rgba(16, 185, 129, 0.35);
-      color: #6ee7b7;
+      background: rgba(220, 38, 38, 0.16);
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      color: #fca5a5;
       font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.4px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
       padding: 7px 16px;
       border-radius: 999px;
       margin-bottom: 22px;
@@ -173,7 +309,7 @@
     }
 
     .hero h1 span {
-      background: linear-gradient(90deg, #34d399, #fbbf24);
+      background: linear-gradient(90deg, #ef4444, #facc15);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
@@ -183,7 +319,7 @@
       color: var(--muted);
       max-width: 680px;
       margin-bottom: 34px;
-      font-weight: 400;
+      font-weight: 500;
     }
 
     .hero-actions {
@@ -192,7 +328,6 @@
       flex-wrap: wrap;
     }
 
-    /* Secciones */
     section {
       padding: 72px 0;
     }
@@ -212,7 +347,6 @@
       max-width: 720px;
     }
 
-    /* Tarjetas modernas */
     .grid-3 {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
@@ -230,22 +364,22 @@
     .card:hover {
       transform: translateY(-4px);
       background: var(--surface-hover);
-      border-color: rgba(255, 255, 255, 0.2);
+      border-color: rgba(239, 68, 68, 0.45);
     }
 
     .card-tag {
       display: inline-block;
-      font-size: 0.75rem;
+      font-size: 0.76rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.9px;
       color: var(--accent);
       margin-bottom: 10px;
     }
 
     .card h3 {
       color: #ffffff;
-      font-weight: 800;
+      font-weight: 900;
       margin-bottom: 10px;
       font-size: 1.25rem;
     }
@@ -255,11 +389,10 @@
       font-size: 0.98rem;
     }
 
-    /* Bloque de Historia */
     .story-box {
-      background: linear-gradient(180deg, #12151c 0%, #0d1015 100%);
+      background: linear-gradient(180deg, #140f11 0%, #0b090a 100%);
       border: 1px solid var(--border);
-      border-top: 3px solid var(--accent);
+      border-top: 3px solid var(--primary-bright);
       border-radius: var(--radius);
       padding: clamp(24px, 4vw, 42px);
     }
@@ -274,7 +407,7 @@
 
     .story-box p {
       margin-bottom: 16px;
-      color: #cbd5e1;
+      color: #e2e8f0;
       font-size: 1.03rem;
     }
 
@@ -293,6 +426,7 @@
     .milestone {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
       border-radius: 14px;
       padding: 18px;
       font-size: 0.94rem;
@@ -301,13 +435,12 @@
 
     .milestone strong {
       display: block;
-      color: #34d399;
+      color: var(--accent);
       font-size: 1rem;
-      font-weight: 800;
+      font-weight: 900;
       margin-bottom: 6px;
     }
 
-    /* Contacto */
     .contact-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
@@ -323,12 +456,12 @@
       padding: 10px 0;
       border-bottom: 1px solid var(--border);
       font-size: 0.98rem;
-      color: #cbd5e1;
+      color: #e2e8f0;
     }
 
     .contact-list li strong {
       color: #ffffff;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .contact-list li:last-child {
@@ -336,7 +469,7 @@
     }
 
     footer {
-      background: #050608;
+      background: #040304;
       border-top: 1px solid var(--border);
       color: var(--muted);
       padding: 36px 0;
@@ -351,34 +484,70 @@
     footer p + p {
       margin-top: 8px;
       font-size: 0.84rem;
-      color: #64748b;
+      color: #94a3b8;
+    }
+
+    .admin-trigger {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 0.78rem;
+      color: rgba(255, 255, 255, 0.35);
+      cursor: pointer;
+    }
+
+    .admin-trigger:hover {
+      color: var(--accent);
     }
   </style>
 </head>
 <body>
 
+  <!-- Barra de herramientas del Administrador -->
+  <div id="admin-bar">
+    <span class="admin-status">MODO ADMIN ACTIVO — Hacé clic en cualquier texto para editarlo</span>
+    <div class="admin-actions">
+      <button class="admin-btn" onclick="saveLocal()">Guardar vista previa</button>
+      <button class="admin-btn admin-btn-save" onclick="exportHTML()">Copiar HTML para GitHub</button>
+      <button class="admin-btn" onclick="logoutAdmin()">Salir</button>
+    </div>
+  </div>
+
+  <!-- Ventana de clave de Administrador -->
+  <div id="login-modal">
+    <div class="login-card">
+      <h3>Acceso Administrador</h3>
+      <p>Ingresá tu clave para editar los textos de la página.</p>
+      <input type="password" id="admin-pass" class="login-input" placeholder="Contraseña..." onkeydown="if(event.key==='Enter') checkLogin()" />
+      <div id="login-error" class="login-error">Clave incorrecta. Intentá de nuevo.</div>
+      <div style="display:flex; gap:10px; justify-content:center;">
+        <button class="btn" style="padding:10px 20px;" onclick="checkLogin()">Entrar</button>
+        <button class="btn-outline" style="padding:10px 20px;" onclick="closeLogin()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
   <header>
     <div class="container nav">
-      <a href="#inicio" class="brand">UMBANDA EN ARGENTINA · AZHAS</a>
+      <a href="#inicio" class="brand" data-editable="true">UMBANDA EN ARGENTINA <span>· AZHAS</span></a>
       <nav class="nav-links">
         <a href="#enfoque">Espacio</a>
         <a href="#historia">El Nacimiento</a>
         <a href="#contacto">Contacto</a>
       </nav>
-      <a href="https://wa.me/5491138176933" target="_blank" rel="noopener" class="btn btn-accent">WhatsApp Directo</a>
+      <a href="https://wa.me/5491138176933" target="_blank" rel="noopener" class="btn">WhatsApp Directo</a>
     </div>
   </header>
 
   <section id="inicio" class="hero">
     <div class="container">
-      <span class="badge">Exclusivamente Umbanda · Villa Ballester, Buenos Aires</span>
-      <h1>Umbanda en Argentina: <span>Fe, Caridad y Fundamentos</span></h1>
-      <p>
+      <span class="badge" data-editable="true">Exclusivamente Umbanda · Villa Ballester, Buenos Aires</span>
+      <h1 data-editable="true">Umbanda en Argentina: <span>Fe, Caridad y Fundamentos</span></h1>
+      <p data-editable="true">
         Conoce el origen, la historia y la doctrina de la Umbanda con claridad y respeto.
         Casa ubicada en Villa Ballester, Partido de San Martín, Provincia de Buenos Aires.
       </p>
       <div class="hero-actions">
-        <a href="https://wa.me/5491138176933" target="_blank" rel="noopener" class="btn btn-accent">Consultar al 11 3817-6933</a>
+        <a href="https://wa.me/5491138176933" target="_blank" rel="noopener" class="btn">Consultar al 11 3817-6933</a>
         <a href="#historia" class="btn-outline">Explorar el origen</a>
       </div>
     </div>
@@ -386,29 +555,29 @@
 
   <section id="enfoque">
     <div class="container">
-      <h2 class="section-title">Un espacio dedicado únicamente a Umbanda</h2>
-      <p class="section-sub">
+      <h2 class="section-title" data-editable="true">Un espacio dedicado únicamente a Umbanda</h2>
+      <p class="section-sub" data-editable="true">
         Esta página está enfocada exclusivamente en la Umbanda. Otros cultos o líneas se presentan por separado.
       </p>
       <div class="grid-3">
         <div class="card">
-          <span class="card-tag">01 · Origen</span>
-          <h3>Raíz y Doctrina</h3>
-          <p>
+          <span class="card-tag" data-editable="true">01 · Origen</span>
+          <h3 data-editable="true">Raíz y Doctrina</h3>
+          <p data-editable="true">
             Tradición nacida en Brasil con base en el amor, la caridad y la enseñanza espiritual de los guías y entidades de Umbanda.
           </p>
         </div>
         <div class="card">
-          <span class="card-tag">02 · Conocimiento</span>
-          <h3>Fundamentos de Fe</h3>
-          <p>
+          <span class="card-tag" data-editable="true">02 · Conocimiento</span>
+          <h3 data-editable="true">Fundamentos de Fe</h3>
+          <p data-editable="true">
             Enseñanza sobre rituales, flores, hierbas, saludos, ofrendas, días de fiesta e incorporación dentro de la doctrina umbandista.
           </p>
         </div>
         <div class="card">
-          <span class="card-tag">03 · Atención</span>
-          <h3>Orientación Directa</h3>
-          <p>
+          <span class="card-tag" data-editable="true">03 · Atención</span>
+          <h3 data-editable="true">Orientación Directa</h3>
+          <p data-editable="true">
             Información y contacto desde Villa Ballester (San Martín, Buenos Aires) para consultas y atención personalizada.
           </p>
         </div>
@@ -419,36 +588,36 @@
   <section id="historia">
     <div class="container">
       <div class="story-box">
-        <h2>El nacimiento de la Umbanda</h2>
-        <p>
+        <h2 data-editable="true">El nacimiento de la Umbanda</h2>
+        <p data-editable="true">
           En el barrio de Neves, 4.º distrito de São Gonçalo, en Niterói (estado de Río de Janeiro, Brasil), un joven de 17 años que estudiaba carrera militar padecía una extraña parálisis. Un 14 de diciembre anunció a su madre que al día siguiente estaría curado. Al amanecer del 15 de diciembre, <strong>Zélio Fernandino de Moraes (1891–1975)</strong> se levantó y caminó.
         </p>
-        <p>
+        <p data-editable="true">
           Tras el asombro de su familia y vecinos, asistieron a una sesión espiritista dirigida por José de Souza. Durante la reunión, Zélio se apartó, recogió flores del jardín y las colocó sobre la mesa principal —marcando la presencia de las flores en las ceremonias de Umbanda—, mientras otros presentes manifestaban espíritus de caboclos y pretos velhos.
         </p>
-        <p>
+        <p data-editable="true">
           Ante el intento de apartar a esas entidades por considerarlas atrasadas, el joven manifestó la voz del <strong>Caboclo de las 7 Encrucijadas</strong>, quien afirmó que no habría caminos cerrados para nadie y convocó a reunirse al día siguiente, 16 de noviembre, a las 20:00 hs en Rua Peixoto, 30. Allí quedó proclamada la <strong>Umbanda</strong> y fundado el primer terreiro, la <em>Tenda Espírita Nossa Senhora da Piedade</em>, dedicada a acoger a quienes acudieran en momentos de dolor.
         </p>
-        <p>
+        <p data-editable="true">
           Con el tiempo, el Caboclo de las 7 Encrucijadas y las entidades de Umbanda transmitieron a los hijos de fe los fundamentos y la doctrina de la religión: cuentas, colores, saludos, ofrendas, flores y hierbas, partes del cuerpo donde trabajan, días de la semana, días de fiesta e incorporación.
         </p>
 
         <div class="timeline">
           <div class="milestone">
-            <strong>15 de diciembre</strong>
-            Curación de Zélio de Moraes en Neves, São Gonçalo (Río de Janeiro).
+            <strong data-editable="true">15 de diciembre</strong>
+            <span data-editable="true">Curación de Zélio de Moraes en Neves, São Gonçalo (Río de Janeiro).</span>
           </div>
           <div class="milestone">
-            <strong>16 de noviembre</strong>
-            Proclamación de la Umbanda y fundación de la Tenda Espírita Nossa Senhora da Piedade.
+            <strong data-editable="true">16 de noviembre</strong>
+            <span data-editable="true">Proclamación de la Umbanda y fundación de la Tenda Espírita Nossa Senhora da Piedade.</span>
           </div>
           <div class="milestone">
-            <strong>1918 – 1937</strong>
-            Apertura de los primeros templos en Río de Janeiro y expansión hacia San Pablo, Minas Gerais y Río Grande del Sur.
+            <strong data-editable="true">1918 – 1937</strong>
+            <span data-editable="true">Apertura de los primeros templos en Río de Janeiro y expansión hacia San Pablo, Minas Gerais y Río Grande del Sur.</span>
           </div>
           <div class="milestone">
-            <strong>1941 – 1978</strong>
-            Congresos umbandistas, creación del CONDU (1971) y consolidación de obras doctrinales de Umbanda.
+            <strong data-editable="true">1941 – 1978</strong>
+            <span data-editable="true">Congresos umbandistas, creación del CONDU (1971) y consolidación de obras doctrinales de Umbanda.</span>
           </div>
         </div>
       </div>
@@ -457,29 +626,29 @@
 
   <section id="contacto">
     <div class="container">
-      <h2 class="section-title">Ubicación y Contacto</h2>
-      <p class="section-sub">
+      <h2 class="section-title" data-editable="true">Ubicación y Contacto</h2>
+      <p class="section-sub" data-editable="true">
         Villa Ballester, Partido de San Martín, Provincia de Buenos Aires, Argentina.
       </p>
       <div class="contact-grid">
         <div class="card">
-          <span class="card-tag">Contacto</span>
-          <h3>Canales directos</h3>
+          <span class="card-tag" data-editable="true">Contacto</span>
+          <h3 data-editable="true">Canales directos</h3>
           <ul class="contact-list">
-            <li><strong>Celular / WhatsApp:</strong> 11 3817-6933</li>
-            <li><strong>Correo:</strong> Ejm-1348@hotmail.com</li>
-            <li><strong>Mensajería:</strong> Line, Tango, Viber, Skype (Edgardo.oso), WeChat (azhas-prethas)</li>
+            <li data-editable="true"><strong>Celular / WhatsApp:</strong> 11 3817-6933</li>
+            <li data-editable="true"><strong>Correo:</strong> Ejm-1348@hotmail.com</li>
+            <li data-editable="true"><strong>Mensajería:</strong> Line, Tango, Viber, Skype (Edgardo.oso), WeChat (azhas-prethas)</li>
           </ul>
           <br />
-          <a href="https://wa.me/5491138176933" target="_blank" rel="noopener" class="btn">Enviar mensaje por WhatsApp</a>
+          <a href="https://wa.me/5491138176933" target="_blank" rel="noopener" class="btn btn-accent">Enviar mensaje por WhatsApp</a>
         </div>
         <div class="card">
-          <span class="card-tag">Ubicación</span>
-          <h3>Zona de referencia</h3>
-          <p>
+          <span class="card-tag" data-editable="true">Ubicación</span>
+          <h3 data-editable="true">Zona de referencia</h3>
+          <p data-editable="true">
             <strong>Villa Ballester</strong>, Partido de San Martín, Provincia de Buenos Aires, Argentina.
           </p>
-          <p style="margin-top: 14px;">
+          <p style="margin-top: 14px;" data-editable="true">
             Si deseas consultar o solicitar información, escribinos directo por WhatsApp o correo electrónico.
           </p>
         </div>
@@ -489,10 +658,104 @@
 
   <footer>
     <div class="container">
-      <p><strong>Umbanda en Argentina · Casa AZHAS</strong> — Villa Ballester, Buenos Aires.</p>
-      <p>Sitio enfocado exclusivamente en Umbanda.</p>
+      <p data-editable="true"><strong>Umbanda en Argentina · Casa AZHAS</strong> — Villa Ballester, Buenos Aires.</p>
+      <p data-editable="true">Sitio enfocado exclusivamente en Umbanda.</p>
+      <span class="admin-trigger" onclick="openLogin()">Admin</span>
     </div>
   </footer>
+
+  <script>
+    // Clave por defecto: "azhas1348" (almacenada como hash SHA-256)
+    const ADMIN_HASH = "e38f1c738f119a99322c464f8cf601d8f44483416840b5046967477a129368cf";
+
+    async function sha256(text) {
+      const encoder = new TextEncoder();
+      const data = encoder.encode(text);
+      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+      return Array.from(new Uint8Array(hashBuffer))
+        .map(b => b.toString(16).padStart(2, "0"))
+        .join("");
+    }
+
+    function openLogin() {
+      document.getElementById("login-modal").classList.add("open");
+      document.getElementById("admin-pass").value = "";
+      document.getElementById("login-error").style.display = "none";
+      setTimeout(() => document.getElementById("admin-pass").focus(), 100);
+    }
+
+    function closeLogin() {
+      document.getElementById("login-modal").classList.remove("open");
+    }
+
+    async function checkLogin() {
+      const input = document.getElementById("admin-pass").value;
+      const hash = await sha256(input);
+      if (hash === ADMIN_HASH) {
+        closeLogin();
+        enableAdminMode();
+      } else {
+        document.getElementById("login-error").style.display = "block";
+      }
+    }
+
+    function enableAdminMode() {
+      document.body.classList.add("editing-mode");
+      document.getElementById("admin-bar").classList.add("active");
+      document.querySelectorAll("[data-editable]").forEach(el => {
+        el.setAttribute("contenteditable", "true");
+      });
+    }
+
+    function logoutAdmin() {
+      document.body.classList.remove("editing-mode");
+      document.getElementById("admin-bar").classList.remove("active");
+      document.querySelectorAll("[data-editable]").forEach(el => {
+        el.removeAttribute("contenteditable");
+      });
+    }
+
+    function saveLocal() {
+      const data = {};
+      document.querySelectorAll("[data-editable]").forEach((el, idx) => {
+        data[idx] = el.innerHTML;
+      });
+      localStorage.setItem("azhas_umbanda_draft", JSON.stringify(data));
+      alert("Cambios guardados en este navegador. Para publicarlos para todos, tocá 'Copiar HTML para GitHub'.");
+    }
+
+    function exportHTML() {
+      // Clonamos el documento limpio sin modo edición activo
+      const clone = document.documentElement.cloneNode(true);
+      clone.querySelector("body").classList.remove("editing-mode");
+      clone.querySelector("#admin-bar").classList.remove("active");
+      clone.querySelector("#login-modal").classList.remove("open");
+      clone.querySelectorAll("[data-editable]").forEach(el => {
+        el.removeAttribute("contenteditable");
+      });
+
+      const finalCode = "<!DOCTYPE html>\n" + clone.outerHTML;
+      navigator.clipboard.writeText(finalCode).then(() => {
+        alert("¡Código HTML copiado! Ahora entrá a index.html en tu GitHub, borrá todo, pegá (Ctrl+V) y dale a 'Commit changes'.");
+      }).catch(() => {
+        prompt("Copiá este código completo (Ctrl+C):", finalCode);
+      });
+    }
+
+    // Cargar borrador local si existe
+    window.addEventListener("DOMContentLoaded", () => {
+      const saved = localStorage.getItem("azhas_umbanda_draft");
+      if (saved) {
+        const data = JSON.parse(saved);
+        document.querySelectorAll("[data-editable]").forEach((el, idx) => {
+          if (data[idx] !== undefined) el.innerHTML = data[idx];
+        });
+      }
+      if (window.location.hash === "#admin") {
+        openLogin();
+      }
+    });
+  </script>
 
 </body>
 </html>
