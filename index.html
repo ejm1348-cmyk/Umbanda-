@@ -181,3 +181,318 @@
     .hero p {
       font-size: 1.15rem;
       color: var(--muted);
+      max-width: 680px;
+      margin-bottom: 34px;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Secciones */
+    section {
+      padding: 72px 0;
+    }
+
+    .section-title {
+      font-size: clamp(1.85rem, 3.5vw, 2.4rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      margin-bottom: 36px;
+      max-width: 720px;
+    }
+
+    /* Tarjetas modernas */
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      background: var(--surface-hover);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .card h3 {
+      color: #ffffff;
+      font-weight: 800;
+      margin-bottom: 10px;
+      font-size: 1.25rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    /* Bloque de Historia */
+    .story-box {
+      background: linear-gradient(180deg, #12151c 0%, #0d1015 100%);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--accent);
+      border-radius: var(--radius);
+      padding: clamp(24px, 4vw, 42px);
+    }
+
+    .story-box h2 {
+      color: #ffffff;
+      font-weight: 900;
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+
+    .story-box p {
+      margin-bottom: 16px;
+      color: #cbd5e1;
+      font-size: 1.03rem;
+    }
+
+    .story-box strong {
+      color: #ffffff;
+      font-weight: 800;
+    }
+
+    .timeline {
+      margin-top: 30px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .milestone {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      font-size: 0.94rem;
+      color: var(--muted);
+    }
+
+    .milestone strong {
+      display: block;
+      color: #34d399;
+      font-size: 1rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    /* Contacto */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 22px;
+    }
+
+    .contact-list {
+      list-style: none;
+      margin-top: 14px;
+    }
+
+    .contact-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.98rem;
+      color: #cbd5e1;
+    }
+
+    .contact-list li strong {
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .contact-list li:last-child {
+      border-bottom: none;
+    }
+
+    footer {
+      background: #050608;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      padding: 36px 0;
+      text-align: center;
+      font-size: 0.92rem;
+    }
+
+    footer strong {
+      color: #ffffff;
+    }
+
+    footer p + p {
+      margin-top: 8px;
+      font-size: 0.84rem;
+      color: #64748b;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container nav">
+      <a href="#inicio" class="brand">UMBANDA EN ARGENTINA · AZHAS</a>
+      <nav class="nav-links">
+        <a href="#enfoque">Espacio</a>
+        <a href="#historia">El Nacimiento</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <a href="https://wa.me/5491138176933" target="_blank" rel="noopener" class="btn btn-accent">WhatsApp Directo</a>
+    </div>
+  </header>
+
+  <section id="inicio" class="hero">
+    <div class="container">
+      <span class="badge">Exclusivamente Umbanda · Villa Ballester, Buenos Aires</span>
+      <h1>Umbanda en Argentina: <span>Fe, Caridad y Fundamentos</span></h1>
+      <p>
+        Conoce el origen, la historia y la doctrina de la Umbanda con claridad y respeto.
+        Casa ubicada en Villa Ballester, Partido de San Martín, Provincia de Buenos Aires.
+      </p>
+      <div class="hero-actions">
+        <a href="https://wa.me/5491138176933" target="_blank" rel="noopener" class="btn btn-accent">Consultar al 11 3817-6933</a>
+        <a href="#historia" class="btn-outline">Explorar el origen</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="enfoque">
+    <div class="container">
+      <h2 class="section-title">Un espacio dedicado únicamente a Umbanda</h2>
+      <p class="section-sub">
+        Esta página está enfocada exclusivamente en la Umbanda. Otros cultos o líneas se presentan por separado.
+      </p>
+      <div class="grid-3">
+        <div class="card">
+          <span class="card-tag">01 · Origen</span>
+          <h3>Raíz y Doctrina</h3>
+          <p>
+            Tradición nacida en Brasil con base en el amor, la caridad y la enseñanza espiritual de los guías y entidades de Umbanda.
+          </p>
+        </div>
+        <div class="card">
+          <span class="card-tag">02 · Conocimiento</span>
+          <h3>Fundamentos de Fe</h3>
+          <p>
+            Enseñanza sobre rituales, flores, hierbas, saludos, ofrendas, días de fiesta e incorporación dentro de la doctrina umbandista.
+          </p>
+        </div>
+        <div class="card">
+          <span class="card-tag">03 · Atención</span>
+          <h3>Orientación Directa</h3>
+          <p>
+            Información y contacto desde Villa Ballester (San Martín, Buenos Aires) para consultas y atención personalizada.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="historia">
+    <div class="container">
+      <div class="story-box">
+        <h2>El nacimiento de la Umbanda</h2>
+        <p>
+          En el barrio de Neves, 4.º distrito de São Gonçalo, en Niterói (estado de Río de Janeiro, Brasil), un joven de 17 años que estudiaba carrera militar padecía una extraña parálisis. Un 14 de diciembre anunció a su madre que al día siguiente estaría curado. Al amanecer del 15 de diciembre, <strong>Zélio Fernandino de Moraes (1891–1975)</strong> se levantó y caminó.
+        </p>
+        <p>
+          Tras el asombro de su familia y vecinos, asistieron a una sesión espiritista dirigida por José de Souza. Durante la reunión, Zélio se apartó, recogió flores del jardín y las colocó sobre la mesa principal —marcando la presencia de las flores en las ceremonias de Umbanda—, mientras otros presentes manifestaban espíritus de caboclos y pretos velhos.
+        </p>
+        <p>
+          Ante el intento de apartar a esas entidades por considerarlas atrasadas, el joven manifestó la voz del <strong>Caboclo de las 7 Encrucijadas</strong>, quien afirmó que no habría caminos cerrados para nadie y convocó a reunirse al día siguiente, 16 de noviembre, a las 20:00 hs en Rua Peixoto, 30. Allí quedó proclamada la <strong>Umbanda</strong> y fundado el primer terreiro, la <em>Tenda Espírita Nossa Senhora da Piedade</em>, dedicada a acoger a quienes acudieran en momentos de dolor.
+        </p>
+        <p>
+          Con el tiempo, el Caboclo de las 7 Encrucijadas y las entidades de Umbanda transmitieron a los hijos de fe los fundamentos y la doctrina de la religión: cuentas, colores, saludos, ofrendas, flores y hierbas, partes del cuerpo donde trabajan, días de la semana, días de fiesta e incorporación.
+        </p>
+
+        <div class="timeline">
+          <div class="milestone">
+            <strong>15 de diciembre</strong>
+            Curación de Zélio de Moraes en Neves, São Gonçalo (Río de Janeiro).
+          </div>
+          <div class="milestone">
+            <strong>16 de noviembre</strong>
+            Proclamación de la Umbanda y fundación de la Tenda Espírita Nossa Senhora da Piedade.
+          </div>
+          <div class="milestone">
+            <strong>1918 – 1937</strong>
+            Apertura de los primeros templos en Río de Janeiro y expansión hacia San Pablo, Minas Gerais y Río Grande del Sur.
+          </div>
+          <div class="milestone">
+            <strong>1941 – 1978</strong>
+            Congresos umbandistas, creación del CONDU (1971) y consolidación de obras doctrinales de Umbanda.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto">
+    <div class="container">
+      <h2 class="section-title">Ubicación y Contacto</h2>
+      <p class="section-sub">
+        Villa Ballester, Partido de San Martín, Provincia de Buenos Aires, Argentina.
+      </p>
+      <div class="contact-grid">
+        <div class="card">
+          <span class="card-tag">Contacto</span>
+          <h3>Canales directos</h3>
+          <ul class="contact-list">
+            <li><strong>Celular / WhatsApp:</strong> 11 3817-6933</li>
+            <li><strong>Correo:</strong> Ejm-1348@hotmail.com</li>
+            <li><strong>Mensajería:</strong> Line, Tango, Viber, Skype (Edgardo.oso), WeChat (azhas-prethas)</li>
+          </ul>
+          <br />
+          <a href="https://wa.me/5491138176933" target="_blank" rel="noopener" class="btn">Enviar mensaje por WhatsApp</a>
+        </div>
+        <div class="card">
+          <span class="card-tag">Ubicación</span>
+          <h3>Zona de referencia</h3>
+          <p>
+            <strong>Villa Ballester</strong>, Partido de San Martín, Provincia de Buenos Aires, Argentina.
+          </p>
+          <p style="margin-top: 14px;">
+            Si deseas consultar o solicitar información, escribinos directo por WhatsApp o correo electrónico.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p><strong>Umbanda en Argentina · Casa AZHAS</strong> — Villa Ballester, Buenos Aires.</p>
+      <p>Sitio enfocado exclusivamente en Umbanda.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
