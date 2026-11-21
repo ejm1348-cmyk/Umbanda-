@@ -504,8 +504,9 @@
 
   <!-- Barra de herramientas del Administrador -->
   <div id="admin-bar">
-    <span class="admin-status">MODO ADMIN ACTIVO — Hacé clic en cualquier texto para editarlo</span>
+    <span class="admin-status">MODO ADMIN ACTIVO — Tocá cualquier texto para editarlo</span>
     <div class="admin-actions">
+      <button class="admin-btn" onclick="changePassword()">Cambiar clave</button>
       <button class="admin-btn" onclick="saveLocal()">Guardar vista previa</button>
       <button class="admin-btn admin-btn-save" onclick="exportHTML()">Copiar HTML para GitHub</button>
       <button class="admin-btn" onclick="logoutAdmin()">Salir</button>
@@ -665,16 +666,10 @@
   </footer>
 
   <script>
-    // Clave por defecto: "azhas1348" (almacenada como hash SHA-256)
-    const ADMIN_HASH = "e38f1c738f119a99322c464f8cf601d8f44483416840b5046967477a129368cf";
+    const DEFAULT_PASS = "azhas1348";
 
-    async function sha256(text) {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(text);
-      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-      return Array.from(new Uint8Array(hashBuffer))
-        .map(b => b.toString(16).padStart(2, "0"))
-        .join("");
+    function getAdminPass() {
+      return localStorage.getItem("azhas_admin_pass") || DEFAULT_PASS;
     }
 
     function openLogin() {
@@ -688,14 +683,23 @@
       document.getElementById("login-modal").classList.remove("open");
     }
 
-    async function checkLogin() {
+    function checkLogin() {
       const input = document.getElementById("admin-pass").value;
-      const hash = await sha256(input);
-      if (hash === ADMIN_HASH) {
+      if (input === getAdminPass()) {
         closeLogin();
         enableAdminMode();
       } else {
         document.getElementById("login-error").style.display = "block";
+      }
+    }
+
+    function changePassword() {
+      const nueva = prompt("Ingresá la nueva clave de administrador:");
+      if (nueva && nueva.trim().length >= 4) {
+        localStorage.setItem("azhas_admin_pass", nueva.trim());
+        alert("Clave actualizada en este navegador.");
+      } else if (nueva !== null) {
+        alert("La clave debe tener al menos 4 caracteres.");
       }
     }
 
@@ -725,7 +729,6 @@
     }
 
     function exportHTML() {
-      // Clonamos el documento limpio sin modo edición activo
       const clone = document.documentElement.cloneNode(true);
       clone.querySelector("body").classList.remove("editing-mode");
       clone.querySelector("#admin-bar").classList.remove("active");
@@ -742,7 +745,6 @@
       });
     }
 
-    // Cargar borrador local si existe
     window.addEventListener("DOMContentLoaded", () => {
       const saved = localStorage.getItem("azhas_umbanda_draft");
       if (saved) {
