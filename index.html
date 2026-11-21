@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="es"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Umbanda en Argentina | Casa AZHAS - Villa Ballester</title>
   <style>
     :root {
@@ -500,10 +499,10 @@
     }
   </style>
 </head>
-<body>
+<body class="">
 
   <!-- Barra de herramientas del Administrador -->
-  <div id="admin-bar">
+  <div id="admin-bar" class="">
     <span class="admin-status">MODO ADMIN ACTIVO — Tocá cualquier texto para editarlo</span>
     <div class="admin-actions">
       <button class="admin-btn" onclick="changePassword()">Cambiar clave</button>
@@ -514,12 +513,12 @@
   </div>
 
   <!-- Ventana de clave de Administrador -->
-  <div id="login-modal">
+  <div id="login-modal" class="">
     <div class="login-card">
       <h3>Acceso Administrador</h3>
       <p>Ingresá tu clave para editar los textos de la página.</p>
-      <input type="password" id="admin-pass" class="login-input" placeholder="Contraseña..." onkeydown="if(event.key==='Enter') checkLogin()" />
-      <div id="login-error" class="login-error">Clave incorrecta. Intentá de nuevo.</div>
+      <input type="password" id="admin-pass" class="login-input" placeholder="Contraseña..." onkeydown="if(event.key==='Enter') checkLogin()">
+      <div id="login-error" class="login-error" style="display: none;">Clave incorrecta. Intentá de nuevo.</div>
       <div style="display:flex; gap:10px; justify-content:center;">
         <button class="btn" style="padding:10px 20px;" onclick="checkLogin()">Entrar</button>
         <button class="btn-outline" style="padding:10px 20px;" onclick="closeLogin()">Cancelar</button>
@@ -638,9 +637,9 @@
           <ul class="contact-list">
             <li data-editable="true"><strong>Celular / WhatsApp:</strong> 11 3817-6933</li>
             <li data-editable="true"><strong>Correo:</strong> Ejm-1348@hotmail.com</li>
-            <li data-editable="true"><strong>Mensajería:</strong> Line, Tango, Viber, Skype (Edgardo.oso), WeChat (azhas-prethas)</li>
+            <li data-editable="true"><strong>Mensajería:</strong>&nbsp;Ejm-1348@hotmail.com</li>
           </ul>
-          <br />
+          <br>
           <a href="https://wa.me/5491138176933" target="_blank" rel="noopener" class="btn btn-accent">Enviar mensaje por WhatsApp</a>
         </div>
         <div class="card">
@@ -759,5 +758,6 @@
     });
   </script>
 
-</body>
-</html>
+
+
+</body></html>
